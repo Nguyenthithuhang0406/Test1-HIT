@@ -10,13 +10,12 @@ const SubjectList = () => {
     const [image, setImage] = useState("");
     const [name, setName] = useState("");
     const [describe, setDescribe] = useState("");
-    const [editValue, setEditValue] = useState("");
 
     const handleAdd = () => {
         setSubject([...subject, {
             image, name, describe
         }]);
-        console.log(subject)
+       
         setImage("");
         setName("");
         setDescribe("");
@@ -24,30 +23,30 @@ const SubjectList = () => {
     }
 
     const handleEditId = (id) => {
-        // setId(id);
+        setId(id);
 
-        // const updateSubject = [...subject];
-        // const itemEdit = updateSubject[id];
+        const updateSubject = [...subject];
+        const itemEdit = updateSubject[id];
 
-        // setImage(itemEdit.image);
-        // setName(itemEdit.name);
-        // setDescribe(itemEdit.describe);
+        setImage(itemEdit.image);
+        setName(itemEdit.name);
+        setDescribe(itemEdit.describe);
+
     }
 
     const handleEdit = () => {
-        // const updateSubject = [...subject];
-        // setEditValue({image, name, describe});
-        // updateSubject[id] = editValue;
-        // setSubject(updateSubject);
+        const updateSubject = [...subject];
+        updateSubject[id] = {image, name, describe};
+        setSubject(updateSubject);
 
-        // setImage("");
-        // setName("");
-        // setDescribe("");
+        setImage("");
+        setName("");
+        setDescribe("");
     }
 
     const handleDelete = (id) => {
-        // const newSubject = subject.reduce((item, index) => index !== id);
-        // setSubject(newSubject);
+        const newSubject = subject.filter((item, index) => index !== id);
+        setSubject(newSubject);
     }
     return (
         <div className='subject'>
@@ -81,11 +80,13 @@ const SubjectList = () => {
                 {subject && subject.map((item, index) => {
                     return <div className='subject-item' key={index}>
                             <img src={item.image} className='image-item'/>
-                            <p className='name-item'>{item.name}</p>
-                            <div className='describe-item'>{item.describe}</div>
+                            <div className='content'>
+                                <p className='name-item'><b>{item.name}</b></p>
+                                <div className='describe-item'><b>Mô tả</b>: {item.describe}</div>
+                            </div>
                             <div className='icon'>
-                                <img src={edit} onClick={handleEditId(index)} className='icon-item'/>
-                                <img src={deleteIcon} onClick={handleDelete(index)} className='icon-item'/>
+                                <img src={edit} onClick={() => handleEditId(index)} className='icon-item'/>
+                                <img src={deleteIcon} onClick={() => handleDelete(index)} className='icon-item'/>
                             </div>
                     </div>
 
